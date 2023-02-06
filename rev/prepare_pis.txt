@@ -1,0 +1,21 @@
+# how to get PIS weight mat 
+
+## save last model for each body part
+sh common23_new_partLevel.sh 
+
+## get result_{part}.npy (per-class accuracy statistics for each body part)
+sh common23_new_get_pis.sh 
+
+## it will print a pis weight mat
+python get_pis_common23_new.py 
+
+## Copy the weight mat to skcutmix_pis_new.py
+n2e_pis_mat=...
+e2n_pis_mat=...
+
+
+
+
+
+
+

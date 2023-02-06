@@ -1,0 +1,50 @@
+work_dir: basic
+
+# feeder
+train_feeder: feeders.feeder.Feeder_SameLabelPair_skcutmix
+train_feeder_args:
+  data_path:    common23_230201/etri/train_data_joint_len64.npy
+  label_path:   common23_230201/etri/train_label.pkl
+  data_path_2:  common23_230201/ntu/train_10shot_data_joint_len64.npy
+  label_path_2: common23_230201/ntu/train_10shot_label.pkl
+  debug: False
+  random_choose: False
+  random_shift: False
+  random_move: False
+  window_size: -1
+  normalization: False
+
+val_feeder: feeders.feeder.Feeder
+val_feeder_args:
+  data_path:  common23_230201/etri/test_data_joint_len64.npy
+  label_path: common23_230201/etri/test_label.pkl
+
+
+test_feeder: feeders.feeder.Feeder
+test_feeder_args:
+  data_path:  common23_230201/ntu/test_data_joint_len64.npy
+  label_path: common23_230201/ntu/test_label.pkl
+
+# model
+model: nets.agcn.agcn.Model_thin
+model_args:
+  num_class: 23
+  num_point: 25
+  num_person: 2
+  graph: nets.agcn.graph.ntu_rgb_d.Graph
+  graph_args:
+    labeling_mode: 'spatial'
+
+#optim
+weight_decay: 0.0001
+base_lr: 0.1
+step: [30, 40]
+
+# training
+device: 0
+batch_size: 64
+test_batch_size: 64
+num_epoch: 50
+nesterov: True
+
+eval_interval: 1
